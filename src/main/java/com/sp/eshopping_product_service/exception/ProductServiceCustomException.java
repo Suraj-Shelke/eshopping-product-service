@@ -1,0 +1,11 @@
+package com.sp.eshopping_product_service.exception;
+
+public class ProductServiceCustomException extends RuntimeException{
+
+    private String errorCode;
+
+    public ProductServiceCustomException(String message, String errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+}
