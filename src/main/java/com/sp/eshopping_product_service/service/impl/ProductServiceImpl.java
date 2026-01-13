@@ -11,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -70,5 +74,14 @@ public class ProductServiceImpl implements ProductService {
         }
         log.info("Deleting Product with id: {}", productId);
         productRepository.deleteById(productId);
+    }
+
+    @Override
+    public List<ProductResponse> getAllProducts() {
+        log.info("ProductServiceImpl | getAllProducts is called");
+        List<Product> productList= productRepository.findAll();
+        List<ProductResponse> products=productList.stream().map(p-> new ProductResponse(p.getProductName(),p.getProductId(),p.getQuantity(),p.getPrice()))
+                .collect(Collectors.toList());
+        return products;
     }
 }
